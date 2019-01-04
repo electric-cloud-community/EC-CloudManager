@@ -1,0 +1,11 @@
+<page>
+  <title>Cloud Manager</title>
+  <helpLink>help</helpLink>
+  <componentContainer>
+    <component plugin="@PLUGIN_KEY@"
+               version="@PLUGIN_VERSION@"
+               ref="CloudManager">
+      <panel>Configure</panel>
+    </component>
+  </componentContainer>
+</page>

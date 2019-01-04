@@ -1,0 +1,164 @@
+/* ActionList.css -
+ *
+ * This file defines styles used for ActionList objects.
+ *
+ * Copyright (c) 2007 Electric Cloud, Inc.
+ * All rights reserved
+ */
+
+/* Action lists that do not support "overflowing" actions. */
+
+table.actionListInline {
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 10px;
+    border: none;
+    width: 1%;
+    float: right;
+}
+
+table.actionListInline tr td {
+    border: none;
+    white-space: nowrap;
+}
+
+table.actionListInline tr td.action {
+    padding: 0px;
+}
+
+table.actionListInline tr td.separator {
+    padding: 0px 6px 3px 6px;
+}
+
+/* Action lists that support "overflowing" actions. */
+
+/* The table of actions that is displayed on the page. */
+
+table.actionList {
+    text-align: right;
+    white-space: nowrap;
+    width: 100%;
+}
+
+table.actionList td {
+    white-space: nowrap;
+    border: none;
+    padding: 0px;
+}
+
+table.actionList td.linkHtml {
+    padding-right: 3px;
+}
+
+table.actionList td.inlineButton {
+    padding-top: 2px;
+    padding-left: 2px;
+}
+
+table.actionList td.inlineButton span {
+    cursor: pointer;
+}
+
+table.actionList td.inlineButton2 {
+    padding-top: 0px;
+}
+
+table.actionList td.inlineButton2 span {
+    cursor: pointer;
+}
+
+table.actionList td.moreButton {
+    padding-left: 2px;
+}
+
+table.actionList td.filler {
+    width: 100%;
+}
+
+table.actionList a table {
+    background: transparent;
+}
+
+table.actionList td.action {
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+/* The dropdown menu of actions that cannot fit on the visible page. */
+
+table.actionList div.menu {
+    position: absolute;
+    background-color: #FFFFFF;
+    padding: 4px;
+    border-top: solid 1px #DDDDDD;
+    border-left: solid 1px #DDDDDD;
+    border-bottom: solid 2px #CCCCCC;
+    border-right: solid 2px #CCCCCC;
+    z-index: 2;
+}
+
+table.actionList div.divider {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-top: solid 1px #DDDDDD;
+    font-size: 6px;
+}
+
+table.actionList div.menu div.action {
+    text-align: left;
+}
+
+table.actionList div.menu div.action2 {
+    text-align: left;
+    padding: 3px 3px 2px 3px;
+}
+
+table.actionList div.menu div.action2 a {
+    width: 100%;
+}
+
+table.actionList div.menu div.action2 table td,
+table.actionList div.menu div.action table td {
+    padding: 2px;
+}
+
+table.actionList div.menu div.action a,
+table.actionList div.menu div.action2 a {
+    background-image: url(../images/dottedBorder1White.gif);
+}
+
+table.actionList div.menu div.action2:hover,
+table.actionList div.menu div.action:hover {
+    cursor: pointer;
+    background-color: #DFE1E7;
+    background-image: url(../images/dottedBorder1Gray.gif);
+}
+
+table.actionList div.menu div.action a:hover,
+table.actionList div.menu div.action2 a:hover {
+    background-image: url(../images/dottedBorder1Gray.gif);
+    color: #000000;
+}
+
+table.actionList div.menu div.action2:hover table,
+table.actionList div.menu div.action:hover table {
+    background-image: url(../images/dottedBorder1Gray.gif);
+    color: #000000;
+}
+
+table.actionList div.moreButton {
+    display: inline;
+    padding-left: 10px;
+    margin-right: 10px;
+}
+
+/* The button which toggles the overflow menu. */
+
+img.actionListToggle {
+    padding-top: 2px;
+    cursor: pointer;
+}
+
+img.actionListToggle a {
+    background-image: none;
+}

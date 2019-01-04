@@ -1,0 +1,234 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:c="urn:import:com.google.gwt.user.cellview.client"
+             xmlns:e="urn:import:com.electriccloud.commander.gwt.client.ui.impl"
+             xmlns:i="urn:import:ecinternal.client.ui.impl">
+
+  <ui:style>
+    .lastRow {
+      border-bottom-style: none;
+    }
+
+    .loading {
+      width: 800px;
+      text-align: center;
+      vertical-align: middle;
+      margin: 30px;
+    }
+
+    .integerText {
+      width: inherit;
+      padding-right: 5px;
+    }
+
+    .table td {
+      padding-right: 1em;
+    }
+
+    .subhead {
+      padding-top: 1em;
+      font-weight: bold;
+    }
+
+    .note {
+      font-style: italic;
+      font-weight: lighter;
+    }
+  </ui:style>
+  <ui:with field="ec" type="ecinternal.client.ui.InternalResources"/>
+  <ui:style field="form" src="../styles/Form.css"/>
+
+  <g:DeckPanel ui:field="m_deckPanel">
+    <!-- Panel 0: loading image -->
+    <g:SimplePanel width="800px" height="300px"
+                   styleName="{style.loading}">
+      <g:Image resource='{ec.cellTableLoading}' altText="Loading..."/>
+    </g:SimplePanel>
+
+    <!-- Panel 1: the form -->
+    <g:VerticalPanel styleName="">
+      <g:HorizontalPanel width="800px">
+        <!-- Left Column -->
+        <g:cell width="50%">
+          <g:VerticalPanel width="100%">
+            <g:CaptionPanel captionText="General">
+              <ui:attribute name="captionText"/>
+              <g:VerticalPanel width="100%" spacing="3">
+                <!-- Name -->
+                <g:cell styleName="{form.form_row}">
+                  <g:Label>
+                    <ui:msg description="planName">Plan Name</ui:msg>
+                  </g:Label>
+                </g:cell>
+                <g:TextBox width="100%" ui:field="m_name"/>
+
+                <!-- Description -->
+                <g:cell styleName="{form.form_row}">
+                  <g:Label>
+                    <ui:msg description="description">Description
+                    </ui:msg>
+                  </g:Label>
+                </g:cell>
+                <g:TextArea width="100%" ui:field="m_description"/>
+
+                <!-- Pool name -->
+                <g:Label>
+                  <ui:msg description="pool">Pool Name</ui:msg>
+                </g:Label>
+                <i:ResourcePoolPickerImpl ui:field="m_poolName"/>
+                <!--<g:SuggestBox ui:field="m_poolName">-->
+                  <!--<ui:msg description="poolName">Pool Name-->
+                  <!--</ui:msg>-->
+                <!--</g:SuggestBox>-->
+
+                <g:HorizontalPanel>
+                  <g:CheckBox checked="true" ui:field="m_enabled"><ui:msg>Enabled</ui:msg></g:CheckBox>
+                  <g:CheckBox checked="false" ui:field="m_debug"><ui:msg>Debug</ui:msg></g:CheckBox>
+                </g:HorizontalPanel>
+              </g:VerticalPanel>
+            </g:CaptionPanel>
+
+            <!-- Demand query procedure -->
+            <g:CaptionPanel captionText="Demand Query Procedure">
+              <ui:attribute name="captionText"/>
+              <g:VerticalPanel>
+                <g:Label>
+                  <ui:msg>Project</ui:msg>
+                </g:Label>
+                <g:SimplePanel ui:field="m_queryProjectPicker"/>
+                <g:Label>
+                  <ui:msg>Procedure</ui:msg>
+                </g:Label>
+                <g:SimplePanel ui:field="m_queryProcedurePicker"/>
+                <g:SimplePanel ui:field="m_queryParameterTable"/>
+              </g:VerticalPanel>
+            </g:CaptionPanel>
+
+            <!-- Cloud type picker -->
+            <g:CaptionPanel captionText="Cloud Infrastructure Provider"
+                            addStyleNames="{style.lastRow}">
+              <ui:attribute name="captionText"/>
+              <g:DeckPanel ui:field="m_providerDeck">
+                <g:Label styleName="{style.note}">
+                  <ui:msg>There are no infrastructure providers installed.</ui:msg>
+                </g:Label>
+                <g:VerticalPanel>
+                  <g:SimplePanel ui:field="m_providerPanel"/>
+                  <g:Label styleName="{style.subhead}">
+                    <ui:msg>Grow Options</ui:msg>
+                  </g:Label>
+                  <g:SimplePanel ui:field="m_growPanel"/>
+                  <g:Label styleName="{style.subhead}">
+                    <ui:msg>Shrink Options</ui:msg>
+                  </g:Label>
+                  <g:SimplePanel ui:field="m_shrinkPanel"/>
+                </g:VerticalPanel>
+              </g:DeckPanel>
+            </g:CaptionPanel>
+
+          </g:VerticalPanel>
+
+        </g:cell>
+        <!-- Right Column -->
+        <g:VerticalPanel width="100%">
+
+          <!-- Consumption limits -->
+          <g:CaptionPanel captionText="Consumption Limits">
+            <ui:attribute name="captionText"/>
+            <g:HTMLPanel>
+              <table class="{style.table}">
+                <tr>
+                  <td>
+                    <ui:msg>Machine Hours</ui:msg>
+                  </td>
+                  <td colspan="2">
+                    <ui:msg>Within</ui:msg>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <g:TextBox ui:field="m_costMax"
+                               styleName="{style.integerText}"
+                               visibleLength="5"/>
+                  </td>
+                  <td>
+                    <g:TextBox ui:field="m_costPeriod"
+                               styleName="{style.integerText}"
+                               visibleLength="5"/>
+                  </td>
+                  <td>Days</td>
+                </tr>
+              </table>
+            </g:HTMLPanel>
+          </g:CaptionPanel>
+
+          <!-- Time of Day Limits -->
+          <g:CaptionPanel captionText="Time of Day Limits">
+            <ui:attribute name="captionText"/>
+            <g:VerticalPanel width="100%">
+              <g:cell horizontalAlignment="right">
+                <g:Anchor ui:field="m_addLimit">
+                  Add Limit...
+                </g:Anchor>
+              </g:cell>
+            <g:ScrollPanel height="15em ">
+              <c:CellTable ui:field="m_todTable" pageSize="24" />
+            </g:ScrollPanel>
+            </g:VerticalPanel>
+          </g:CaptionPanel>
+
+          <!-- Termination Policy -->
+          <g:CaptionPanel captionText="Termination Policy"
+                          addStyleNames="{style.lastRow}">
+            <ui:attribute name="captionText"/>
+            <g:VerticalPanel>
+              <g:HTMLPanel>
+                <table class="{style.table}">
+                  <tr>
+                    <td>Min</td>
+                    <td>Max</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <g:TextBox ui:field="m_killLimitMin"
+                                 visibleLength="5"
+                                 styleName="{style.integerText}"/>
+                    </td>
+                    <td>
+                      <g:TextBox ui:field="m_killLimitMax"
+                                 visibleLength="5"
+                                 styleName="{style.integerText}"/>
+                    </td>
+                    <td>
+                      <ui:msg>Minutes to next whole hour</ui:msg>
+                    </td>
+                  </tr>
+                </table>
+              </g:HTMLPanel>
+              <e:RadioButtonGroupImpl ui:field="m_policyGroup"/>
+            </g:VerticalPanel>
+          </g:CaptionPanel>
+        </g:VerticalPanel>
+      </g:HorizontalPanel>
+      <g:cell horizontalAlignment="right">
+        <g:HorizontalPanel styleName="{form.form_buttonHolder}"
+                           width="100%">
+          <g:cell width="100%">
+            <g:Label/>
+          </g:cell>
+          <g:Button ui:field="m_restartUsage">
+            <ui:msg description="restart">Restart Usage Counters
+            </ui:msg>
+          </g:Button>
+          <g:Button ui:field="m_save">
+            <ui:msg description="save">Save</ui:msg>
+          </g:Button>
+          <g:Button ui:field="m_cancel">
+            <ui:msg description="cancel">Cancel</ui:msg>
+          </g:Button>
+        </g:HorizontalPanel>
+      </g:cell>
+    </g:VerticalPanel>
+  </g:DeckPanel>
+</ui:UiBinder>

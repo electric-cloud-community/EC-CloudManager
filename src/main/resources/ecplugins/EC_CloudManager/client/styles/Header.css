@@ -1,0 +1,147 @@
+/* Header.css -
+ *
+ * This file defines styles used for Header objects of various types.
+ *
+ * Copyright (c) 2006-2007 Electric Cloud, Inc.
+ * All rights reserved
+ */
+
+@def titleColor #687291;
+@def smallTextColor #000000;
+@def actionSeparatorColor  #BDC5C9;
+@def headerRuleColor #FFFFFF;
+
+/* Standard header lines: */
+
+.header {
+    width: 100%;
+}
+.header_table {
+    width: 100%;
+    color: titleColor;
+}
+.header_left {
+    width: 1%;
+}
+.header_left img {
+    padding-right: 5px;
+    padding-top: 2px;
+    cursor: pointer;
+}
+.header_title {
+    white-space: nowrap;
+    color: #686e71;
+    font-size: 19px;
+    font-weight: 300;
+}
+.header_title2 {
+    white-space: nowrap;
+}
+.header_titleWithLink {
+    white-space: nowrap;
+}
+.header_titleWithLink a {
+    color: titleColor;
+}
+.header_actionList {
+    text-align: right;
+    margin-right: 0px;
+    margin-left: 15px;
+    white-space: nowrap;
+    float: right;
+}
+.header_actionSeparator {
+    white-space: nowrap;
+    margin: 0px 5px 0px 5px;
+    display: inline;
+    border-right: 1px solid actionSeparatorColor;
+}
+
+/* Header at the top of the page: */
+
+.pageHeader {
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+}
+.pageHeader .header_title {
+    font-size: 160%;
+    font-weight: bold;
+}
+.pageHeader .header_titleSeparator {
+    padding: 0px 8px 0px 8px;
+    font-size: 140%;
+    font-weight: normal;
+}
+.pageHeader .header_title2 {
+    font-size: 140%;
+    font-weight: normal;
+}
+
+/* Different sized headers: */
+
+.largeHeader {
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+}
+.largeHeader td.header_title {
+    font-size: 140%;
+    font-weight: bold;
+}
+.largeHeader td.header_titleSeparator {
+    padding: 0px 4px 0px 4px;
+    font-size: 100%;
+    font-weight: normal;
+}
+.largeHeader td.header_title2 {
+    font-size: 130%;
+    font-weight: normal;
+}
+
+.mediumHeader {
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+}
+.mediumHeader td.header_title {
+    font-size: 120%;
+    font-weight: bold;
+}
+.mediumHeader td.header_titleSeparator {
+    padding: 0px 4px 0px 4px;
+    font-size: 100%;
+    font-weight: normal;
+}
+.mediumHeader td.header_title2 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.smallHeader {
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+}
+.smallHeader td.header_title {
+    font-size: 100%;
+    font-weight: bold;
+    color: smallTextColor;
+}
+.smallHeader td.header_titleSeparator {
+    padding: 0px 4px 0px 4px;
+    font-size: 100%;
+    font-weight: normal;
+}
+.smallHeader td.header_title2 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.headerRule {
+    border-top: 3px solid headerRuleColor;
+    border-right: 0px;
+    border-bottom: 8px solid headerRuleColor;
+    border-left: 0px;
+    background-image: url(../images/dottedBorder2.gif);
+    background-position: bottom;
+    background-repeat: repeat-x;
+    color: headerRuleColor;
+}
+

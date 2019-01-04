@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:c="urn:import:com.google.gwt.user.cellview.client"
+             xmlns:v="urn:import:com.googlecode.gchart.client"
+    >
+
+  <ui:style field="m_style"
+            type="ecplugins.EC_CloudManager.client.view.DetailsView.Styles">
+    .chartTitle {
+      font-weight: bold;
+      font-size: 150%;
+    }
+
+    .axisLabel {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 120%;
+    }
+
+    .loading {
+      width: 100%;
+      text-align: center;
+      vertical-align: middle;
+      margin: 30px;
+    }
+    .range {
+      margin-right: 1em;
+    }
+
+    .lastRow {
+      border-bottom-style: none;
+    }
+  </ui:style>
+  <ui:with field="ec" type="ecinternal.client.ui.InternalResources"/>
+  <ui:style field="form" src="../styles/Form.css"/>
+
+  <g:VerticalPanel width="100%">
+
+    <g:DeckPanel ui:field="m_deckPanel">
+      <!-- Panel 0: loading image -->
+      <g:SimplePanel width="100%" height="300px"
+                     styleName="{m_style.loading}">
+        <g:Image resource='{ec.cellTableLoading}' altText="Loading..."/>
+      </g:SimplePanel>
+
+      <!-- Panel 1: chart and related buttons -->
+      <g:VerticalPanel width="100%">
+        <g:cell horizontalAlignment="right">
+          <g:HorizontalPanel>
+            <g:cell horizontalAlignment="right">
+              <g:ListBox ui:field="m_chartRange" styleName="{m_style.range}">
+                <g:item value='day'>
+                  <ui:msg>Day</ui:msg>
+                </g:item>
+                <g:item value='week'>
+                  <ui:msg>Week</ui:msg>
+                </g:item>
+                <g:item value='month'>
+                  <ui:msg>Month</ui:msg>
+                </g:item>
+              </g:ListBox>
+            </g:cell>
+
+            <g:Anchor ui:field="m_refreshLink">
+              <ui:msg description="add">Refresh</ui:msg>
+            </g:Anchor>
+          </g:HorizontalPanel>
+        </g:cell>
+        <v:GChart ui:field="m_chart"/>
+      </g:VerticalPanel>
+    </g:DeckPanel>
+
+    <!-- Horizontal separator -->
+    <g:SimplePanel styleName="{form.form_buttonHolder}" height="1px" width="100%"/>
+
+    <!-- Deployments list -->
+    <g:CaptionPanel captionText="Active Deployments"
+                    styleName="{m_style.lastRow}">
+      <ui:attribute name="captionText"/>
+      <g:VerticalPanel width="100%">
+        <c:CellTable pageSize='10' ui:field="m_table"/>
+        <g:cell horizontalAlignment="right">
+          <c:SimplePager ui:field="m_pager"/>
+        </g:cell>
+      </g:VerticalPanel>
+    </g:CaptionPanel>
+  </g:VerticalPanel>
+
+</ui:UiBinder>

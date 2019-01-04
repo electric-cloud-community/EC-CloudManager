@@ -1,0 +1,73 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <ui:style>
+    .entry {
+      width: 5em;
+    }
+    .row {
+      padding-top: 1em;
+    }
+    .loading {
+      width: 100%;
+      text-align: center;
+      vertical-align: middle;
+      margin: 40px 0 20px 0;
+    }
+
+  </ui:style>
+  <ui:with field="ec" type="ecinternal.client.ui.InternalResources"/>
+  <ui:style field="form" src="../styles/Form.css"/>
+
+  <g:DialogBox text="Configure Cloud Manager Schedule" glassEnabled="true">
+
+    <g:VerticalPanel>
+
+      <g:DeckPanel ui:field="m_deckPanel">
+
+        <g:SimplePanel width="100%"
+                       styleName="{style.loading}">
+          <g:Image resource='{ec.cellTableLoading}' altText="Loading..."/>
+        </g:SimplePanel>
+        <g:VerticalPanel>
+          <g:cell>
+            <g:FlowPanel styleName="{style.row}">
+              <g:CheckBox ui:field="m_enabled"/>
+              <g:InlineLabel>
+                <ui:msg description="enabledLabel">
+                  Schedule Enabled
+                </ui:msg>
+              </g:InlineLabel>
+            </g:FlowPanel>
+          </g:cell>
+
+
+          <g:cell>
+            <g:FlowPanel styleName="{style.row}">
+              <g:InlineLabel>
+                <ui:msg>Poll every&#160;</ui:msg>
+              </g:InlineLabel>
+              <g:TextBox addStyleNames="{style.entry}" ui:field="m_interval"/>
+              <g:InlineLabel>
+                <ui:msg>&#160;minutes</ui:msg>
+              </g:InlineLabel>
+            </g:FlowPanel>
+          </g:cell>
+        </g:VerticalPanel>
+      </g:DeckPanel>
+      <g:cell horizontalAlignment="right">
+        <g:HorizontalPanel styleName="{form.form_buttonHolder}"
+                           width="100%">
+          <g:cell width="100%">
+            <g:Label/>
+          </g:cell>
+          <g:Button ui:field="m_save">
+            <ui:msg description="save">Save</ui:msg>
+          </g:Button>
+          <g:Button ui:field="m_cancel">
+            <ui:msg description="cancel">Cancel</ui:msg>
+          </g:Button>
+        </g:HorizontalPanel>
+      </g:cell>
+    </g:VerticalPanel>
+  </g:DialogBox>
+</ui:UiBinder>

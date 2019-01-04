@@ -1,0 +1,6 @@
+manifest file not being processed... debug
+get plugin so it is built correctly
+research how to do optimistic "lock"... perhaps dont store in properties, do one big blob property for 
+configuration... json or xml
+add hello world ui
+add real ui

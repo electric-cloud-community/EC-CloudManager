@@ -1,0 +1,493 @@
+<helpDefinition>
+  <title>Cloud Manager Help</title>
+  <componentContainer>
+      <LINK REL="StyleSheet" HREF="../../plugins/EC-CloudManager/pluginhelp.css" TYPE="text/css" MEDIA="screen"/>
+	<div class="help">
+    <h1 class="help">Cloud Manager</h1>
+    <hr style="margin-left: -10px; margin-top: 10px; border: 1px solid #112D80; background-color:#112D80;"
+        noshade="noshade" />
+
+    <h2 class="help">What is Cloud Manager?</h2>
+        <p class="help">
+        <span class="arial">Cloud Manager</span> is a dynamic resource load balancer for ElectricFlow that continually resizes available cloud servers based on a combination of pre-defined constraints and run-time information. Commander resources are automatically created for new servers and assigned to a resource pool. Cloud Manager determines the appropriate number of servers and communicates with resource plugins (for example, Amazon EC2, VMWare LabManager, or vCloudDirector) to provision and cleanup servers.
+        </p>
+
+    <h2 class="help">Cloud Manager Architecture</h2>
+
+          <p class="help">
+          The following diagram illustrates how Cloud Manager operates within ElectricFlow to provide a controlled, productive cloud environment.
+          </p>
+
+          <img src="../../plugins/@PLUGIN_KEY@/images/arch.png" alt="" />
+
+          <ul>
+               <li>Balance resource pools in background
+               <ul>
+               		<li>Resources are started and stopped according to the "Plan" and added to a resource pool.</li>
+               		<li>Existing plugins can be extended to do the work.</li>
+               </ul>
+               </li>
+               <li>How many resources do you need?
+               <ul>
+               		<li>An open interface is provided for requirements through Demand Query procedures.</li>
+               		<li>Out-of-the-box Commander and Accelerator Demand Query procedures are provided.</li>
+               </ul>
+               </li>
+               <li>Provide control
+               <ul>
+               		<li>Limits by "time of day" are provided.</li>
+               		<li>Limits by "total consumed" are provided.</li>
+               </ul>
+               </li>
+		  </ul>
+
+     <h2 class="help">When would I use Cloud Manager?</h2>
+		<ul>
+				<li>If you want to run workloads on resources dynamically created in a cloud infrastructure (private or public)</li>
+				<li>If your resource requirements vary over time</li>
+				<li>If the workload can run on machines previously used for other workload steps</li>
+
+        </ul>
+
+          <p class="help">
+          Example use cases:
+          </p>
+
+	<h4 class="help">Commander Pool Management</h4>
+
+		<p class="help">
+		You would like an ElectricFlow resource pool that dynamically allocates more machines as needed. Cloud Manager can monitor the pool and when the pool is exhausted, automatically grow the pool using cloud resources. If the pool has more machines than needed, Cloud Manager shrinks the pool. Steps may enter the "wait for resource" step temporarily until the next Cloud Manager evaluation cycle. The resource pool can include <i>fixed</i> and <i>cloud</i> resources.
+		</p>
+
+		<h4 class="help">Accelerator Cluster Management</h4>
+		<p class="help">
+		You would like an ElectricAccelerator cluster to be auto-sized based on current usage parameters stored in the Accelerator Cluster Manager (CM). The CM provides numbers such as "current agents in use" and "how many agents could I use if I had them".
+		</p>
+
+	<h4 class="help">Arbitrary</h4>
+		<p class="help">
+		You have a custom application that you would like to integrate into Cloud Manager. You know how to call command-line tools to determine the application needs. It is very easy to create your own Demand Query procedure, details are provided below.
+		</p>
+
+	<h2 class="help">Where do I find Cloud Manager?</h2>
+		<p class="help">
+		<b><i>After installing the <span class="arial">EC-CloudManager plugin</span></i></b>, it is available as a subtab under the main <span class="arial">Cloud</span> tab.
+		</p>
+
+	<h2 class="help">Configuring Cloud Manager</h2>
+		<p class="help">
+		Cloud Manager allows you to configure one or more <i>Cloud Plans</i>. Each Cloud Plan contains configuration information to determine when resources should be added or deleted. The <span class="arial">Cloud Plans</span> page contains a list of all configured plans.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/01.png" alt="" />
+
+		<p class="help">
+		To create a new <span class="arial">Cloud Plan</span>, click the <span class="arialbold">Add...</span> link and the <span class="arial">Create Plan</span> page is displayed.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/02.png" alt="" />
+
+	<h3 class="help">General</h3>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/03.png" alt="" />
+
+		<p class="help">
+		Fill-in the fields as follows:
+		</p>
+		<ul>
+			<li><span class="arial">Plan Name</span> - Supply any unique name of your choice for the plan name.</li>
+			<li><span class="arial">Description</span> - (optional) Supply a detailed description for this cloud plan.</li>
+			<li><span class="arial">Pool Name</span> - The name of an <i>existing</i> Commander resource pool to which dynamically created resources will be added. If you have not created a resource pool thus far, you <b><i>must</i></b> create a pool before you can continue. </li>
+			<li><span class="arial">Enabled</span> - Select this box to enable this Cloud Plan. If the plan is not enabled, all settings are saved but the plan will not be processed.</li>
+			<li><span class="arial">Debug</span> - Select this box to turn on more verbose messaging in Cloud Manager step logs.</li>
+		</ul>
+
+		<h3 class="help">Demand Query Procedure</h3>
+		<p class="help">
+		Use this section to specify the Commander procedure to tell Cloud Manager how many resources are needed for this plan. Each time Cloud Manager runs, it runs this procedure and retrieves the result from the property <span class="code">/jobs/$[jobId]/CloudManager/query  </span>(where <span class="code">jobId</span> is the actual <i>jobId</i> of the job that ran).
+		</p>
+
+		<p class="help">
+		Cloud Manager has two built-in procedures, <span class="arial">CommanderQuery</span> and <span class="arial">AcceleratorQuery</span>, or you can easily create your own.  Details on individual or customer Demand Query procedures are provided later in this document.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/04.png" alt="" />
+
+		<p class="help">
+		Fill-in the fields as follows:
+		</p>
+
+		<ul>
+			<li><span class="arial">Project</span> - Select either Plugin or Project: After you select either of these choices, click your mouse inside the adjacent field to see a list of projects or plugins from which to choose.</li>
+			<li><span class="arial">Procedure</span> -Click your mouse inside the field to see a list of available procedures for the project or plugin you chose. For this example, we chose the <span class="arial">Plugin</span> option and selected the <span class="arial">EC-CloudManager plugin</span>. After choosing the CommanderQuery procedure, the parameters for that procedure are displayed.
+			<b>Note:</b> Depending on the project/plugin and the available procedure you choose, the set of parameters displayed is specific to that procedure.</li>
+			<li>The remaining fields will be different depending on the Demand Query procedure you choose. </li>
+		</ul>
+
+		<h3 class="help">Cloud Infrastructure Provider</h3>
+		<p class="help">
+		Use the down-arrow to see a list of cloud plugins. Select the one you need. If you do not see the provider you need, go to the Commander <span class="arial">Plugin Manager</span> page (<span class="arial">Administration > Plugins</span>) to make sure the appropriate plugin is installed. After installation, configure the plugin for your use.
+		</p>
+
+		<p class="help">
+		For our example, we chose <span class="arial">EC-EC2</span> and the following fields were displayed to configure EC2 for cloud use.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/05.png" alt="" />
+
+		<p class="help">
+		Each cloud infrastructure provider requires different information. Use the documentation provided by the cloud plugin to learn about the parameters and what other configuration may be needed.
+		</p>
+
+		<h3 class="help">Consumption Limits</h3>
+		<p class="help">
+		This section allows you to set overall limits on the plan. Setting limits is particularly useful if your dynamic resources must be paid for by the hour because you are using a third-party cloud vendor.
+		</p>
+
+		<p class="help">
+		<b>Note:</b> If the <span class="arial">Demand Query</span> procedure asks for resources above these limits, the request is ignored.
+		</p>
+
+		<ul>
+			<li><span class="arial">Machine Hours</span> - This is the number of usage hours you do not want to exceed. For example, if your budget allows only 40 hours of usage time, type "40" into this field.</li>
+			<li><span class="arial">Within (Days)</span> - Using our "40 hour" example, this is the number of days available in which we can use 40 hours of cloud time. For example, assuming your budget allows using 40-hours each month, you would supply "30" for the number of days you have to use the 40 hours.</li>
+		</ul>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/06.png" alt="" />
+
+		<h3 class="help">Time of Day Limits</h3>
+		<p class="help">
+		Setting a "Time of Day" limit allows you to specify limits on an hourly basis. For example, you may not want Cloud Manager to create more than 5 resources between the hours of 8am and 5pm. Also, you can set a minimum value, which means Cloud Manager should provision resources even if the <span class="arial">Demand Query</span> does not ask.</p>
+
+		<p class="help">
+		Click the <span class="arialbold">Add Limit...</span> link.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/07.png" alt="" />
+
+		<p class="help">
+		The <span class="arial">Time of Day Limit</span> popup menu appears:
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/08.png" alt="" />
+
+		<ul>
+			<li>Use the drop-down arrows to select the <span class="arial">Start</span> and <span class="arial">End</span> times, specifying the hours for the limit.</li>
+			<li>Supply the <span class="arial">Minimum</span> and <span class="arial">Maximum</span> number of resources you want to have available during the block of time you specified. For example, you might want to have a minimum of 5 resources available, but not more than a maximum of 30.</li>
+		</ul>
+		<p class="help">
+		Click <span class="arialbold">Save</span>.
+		</p>
+
+		<h3 class="help">Termination Policy</h3>
+		<p class="help">
+		This is an advanced option. When it is time to stop a resource, these options provide command guidance for which resource to choose. This option can be used if you pay for a resource in hour-units, such as Amazon EC2 instances. Even though Cloud Manager may think it is time to kill an instance, you have already paid for a full hour, so why not keep the resource running in case Cloud Manager thinks it needs an instance again in a short time.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/09.png" alt="" />
+
+		<ul>
+			<li>The <span class="arial">Min</span> and <span class="arial">Max</span> minutes are to the next whole hour of resource running time. Cloud Resources will be selected for termination if they have been running within the limits.<br />
+			For example, a resource starts at 1:23 and at 2:35 it is being evaluated for termination. It has been running 12 minutes into the next hour. If the termination <span class="arial">Min=40</span> and <span class="arial">Max=50</span>, this instance would not fall within the termination policy.<br />
+			The reason for a <span class="arial">Max</span> setting is because it takes time for your shutdown command to make it to the infrastructure. If you waited until the 59th minute to terminate, the instance may actually run another couple of minutes before it is killed. In this case, you would pay for an additional whole hour. For this reason, set your Maximum with enough buffer to process the request.<br />
+			<b>Note:</b> The Cloud Manager polling cycle is 15 minutes by default. If you use this option, set the polling cycle much lower so the plan is evaluated more frequently.
+			</li>
+			<li><span class="arial">Do not give preference to hour boundaries</span> - This is the default and <span class="arial">Min/Max</span> will be ignored. Cloud Manager will not take termination policy into consideration when terminating resources.</li>
+			<li><span class="arial">Give priority to instances within policy limits</span> - This option tries to find a resource that fits the termination policy. If no resources meet the policy, Cloud Manager will choose a resource to kill.</li>
+			<li><span class="arial">Only terminate instances within policy limits</span> - This option only terminates resources running within the policy. If no resource are within the policy, nothing is killed, which could result in more resources running than the Demand Query and limits would otherwise indicate. </li>
+		</ul>
+		<p class="help">
+		After creating your Cloud Plan, click <span class="arialbold">Save</span> to save your configuration and return to the <span class="arial">Cloud Plans</span> page. Your new Cloud Plan is now listed in the table.
+		</p>
+		<p class="help">
+		<b>Note:</b> If you click <span class="arialbold">Restart Usage Counters</span> at the bottom of the <span class="arial">Create Plan</span> page, any <span class="arial">Consumption Limits</span> you defined will return to "zero" value.
+		</p>
+
+		<h2 class="help">Editing your Cloud Plan</h2>
+		<p class="help">
+		From the <span class="arial">Cloud Plans</span> page, click the <span class="arialbold">Edit</span> link for any plan you want to change. When you select the <span class="arialbold">Edit</span> link and the <span class="arial">Edit Plan</span> page appears, all current plan settings are available to edit. Supply new information previously omitted or type-over any existing names or values you need to change.
+		</p>
+		<p class="help">
+		Click <span class="arialbold">Save</span> when your edits are complete.
+		</p>
+
+		<h2 class="help">Cloud Manager Schedule</h2>
+		<p class="help">
+		Cloud Manager evaluates each enabled Cloud Plan on a regular basis. You can set the schedule frequency by selecting the <span class="arialbold">Configure Schedule</span> link from the <span class="arial">Cloud Plans</span> page.
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/10.png" alt="" />
+
+		<br />
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/11.png" alt="" />
+
+		<ul>
+			<li>Selecting the <span class="arial">Schedule Enabled</span> box instructs Cloud Manager to run all plans on the <span class="arial">Cloud Plans</span> page. If you do not want a plan to run, select the <span class="arialbold">Edit</span> link for that plan and make sure the Enable box is "unchecked".</li>
+			<li>Set the polling frequency for the time you need. <b>Note:</b> if you are using a time-based termination policy, you may need to set the polling frequency to 1 minute. Otherwise, a value of  5-15 minutes is reasonable.</li>
+		</ul>
+		<p class="help">
+		Click <span class="arialbold">Save</span>.
+		</p>
+		<h2 class="help">Cloud Reports</h2>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/12.png" alt="" height="279px" width="811px" />
+
+		<p class="help">
+		Clicking a <span class="arial">Plan Name</span> (in the first column) on the <span class="arial">Cloud Plans</span> page displays a Cloud Manager activity report for that plan. This report shows the difference over time between what resources an application requested and what it actually received.  Use this report to see how your Cloud Plan is performing and to determine if you need to raise or lower your limits.<br />
+		<b>Note:</b> If you set minimums in your <span class="arial">Time of Day Limits</span>, the actual number may be higher than the request.
+		</p>
+
+		<h2 class="help">Demand Query Procedure Details</h2>
+
+		<p class="help">
+		As mentioned early, there are three types of Demand Query procedures. <span class="arial">CommanderQuery</span> and <span class="arial">AcceleratorQuery</span> are delivered with Cloud Manager. Also, you can create your own. The following sections detail each Demand Query type.
+		</p>
+
+		<h3 class="help">CommanderQuery Procedure:</h3>
+		<p class="help">
+		This query monitors a Commander resource pool and sizes it automatically based on your settings. The pool can have static resources or be empty, but the pool must already exist. The <span class="arial">CommanerQuery</span> looks at a resource pool and decides how many resources are idle and how many are being used. Inputs to the <span class="arial">CommanderQuery</span> are:
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/13.png" alt="" />
+
+		<ul>
+			<li><span class="arial">Buffer</span> - How many idle resources to keep available (buffer).  If you set this value to 0, Cloud Manager will not provision more resources until the pool is exhausted. If you want to be more proactive and make sure resources exist before they run out, set the value higher. For instance, if set to 2, Cloud Manager will start adding more resources to the pool when there are only two unused resources in the pool.</li>
+			<li><span class="arial">IncludeDead/IncludeDisabled</span> - By default, Cloud Manager does not count disabled or unavailable resources when determining how many resources are idle. Set these values to 1 if you wish to include them in the count. </li>
+		</ul>
+
+		<p class="help">
+		The following is an example of CommanderQuery logic to help understand how it works:
+		</p>
+
+		<ul><ul>
+			<li><span class="arial">Avail:</span>  How many servers are available (not running workload) in the resource pool. </li>
+			<li><span class="arial">Buffer:</span> The value set in the Demand Query parameters</li>
+			<li><span class="arial">Current:</span>  The number of running servers Cloud Manager started for this pool. Cloud Manager tracks the number of servers it creates separately from the total because you can mix permanent servers in the same pool.</li>
+			<li><span class="arial">Buffer Delta:</span>  Looking at the previous columns, how far from reaching the buffer are we? Positive numbers indicate we may need to provision.</li>
+			<li><span class="arial">Request:</span> How many cloud servers should be running?</li>
+		</ul></ul>
+
+		<table class="grid">
+        <thead>
+            <tr class="tablehead">
+                <th>Avail</th>
+
+                <th>BUFFER</th>
+
+                <th>CURRENT<br /> cloud res.<br /> in pool</th>
+
+                <th>Buffer Delta</th>
+
+                <th>Request</th>
+
+                <th>Comments</th>
+
+            </tr>
+        </thead>
+
+		<tbody>
+			<tr>
+				<td align="center">3</td>
+				<td align="center">2</td>
+				<td align="center">0</td>
+				<td align="center">-1</td>
+				<td align="center">0</td>
+				<td>One more than needed, but none are cloud so nothing to do</td>
+			</tr>
+
+			<tr>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">0</td>
+				<td align="center">0</td>
+				<td align="center">0</td>
+				<td>Exactly what we need</td>
+			</tr>
+
+			<tr>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td align="center">0</td>
+				<td align="center">1</td>
+				<td align="center">1</td>
+				<td>One short, no cloud resource already running in pool so add one</td>
+			</tr>
+
+			<tr>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td>Two short, no cloud resource already running in pool so add two</td>
+			</tr>
+
+			<tr>
+				<td align="center">3</td>
+				<td align="center">2</td>
+				<td align="center">1</td>
+				<td align="center">-1</td>
+				<td align="center">0</td>
+				<td>One too many running, and one cloud, so reduce cloud to 0</td>
+			</tr>
+
+			<tr>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">1</td>
+				<td align="center">0</td>
+				<td align="center">1</td>
+				<td>Enough running, keep pool same size</td>
+			</tr>
+
+			<tr>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td align="center">1</td>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td>One short and already running one, so request 2</td>
+			</tr>
+
+			<tr>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td align="center">3</td>
+				<td>Two short and already running one, so request 3</td>
+			</tr>
+
+			<tr>
+				<td align="center">3</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">-1</td>
+				<td align="center">1</td>
+				<td>One too many running and two running in cloud, stop one from cloud</td>
+			</tr>
+
+			<tr>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td>Enough running and two running in cloud, keep 2 in cloud running</td>
+			</tr>
+
+			<tr>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">1</td>
+				<td align="center">3</td>
+				<td>One short, two already running, make it 3 now</td>
+			</tr>
+
+			<tr>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">4</td>
+				<td>Two short, two already running, make it 4 now</td>
+			</tr>
+
+			<tr>
+				<td align="center">3</td>
+				<td align="center">2</td>
+				<td align="center">3</td>
+				<td align="center">-1</td>
+				<td align="center">2</td>
+				<td>One too many running, 3 in cloud, reduce to 2</td>
+			</tr>
+
+			<tr>
+				<td align="center">2</td>
+				<td align="center">2</td>
+				<td align="center">3</td>
+				<td align="center">0</td>
+				<td align="center">3</td>
+				<td>Enough running, keep cloud at 3</td>
+			</tr>
+
+			<tr>
+				<td align="center">1</td>
+				<td align="center">2</td>
+				<td align="center">3</td>
+				<td align="center">1</td>
+				<td align="center">4</td>
+				<td>One short, three running, make it 4</td>
+			</tr>
+
+			<tr>
+				<td align="center">0</td>
+				<td align="center">2</td>
+				<td align="center">3</td>
+				<td align="center">2</td>
+				<td align="center">5</td>
+				<td>Two short, three in cloud, make it 5</td>
+			</tr>
+		</tbody>
+	</table>
+
+		<p class="help">
+		<b>Note:</b> You can go to the <span class="arial">Commander Resource Pools Details</span> page to see status and details for resources in any resource pool.
+		</p>
+
+		<h3 class="help">AcceleratorQuery</h3>
+		<p class="help">
+		The <span class="arial">AcceleratorQuery</span> communicates with an Accelerator Cluster Manager to find out how many agents it wishes it had. Cluster Manager tracks all requests for agents and how many requests were fulfilled. This query helps Cloud Manager to automatically size your Accelerator Cluster,
+		</p>
+
+		<img src="../../plugins/@PLUGIN_KEY@/images/14.png" alt="" />
+
+		<ul>
+			<li><span class="arial">build_class</span> - If you specify a Build Class, it take precedence over the Resource Name setting. Cloud Manager will look up the resource name assigned to the Build Class.</li>
+			<li><span class="arial">cm</span> - The hostname or IP address of your Cluster Manager.</li>
+			<li><span class="arial">cmtool</span> - The path to the cmtool command on the resource that runs this query procedure.</li>
+			<li><span class="arial">credential</span> - This is the credential that contains the Cluster Manager user/password. The <span class="arial">EC-CloudManager</span> plugin has a credential named "default", configured in the plugin project and attached to the AcceleratorQuery step. To change the user/password, navigate to the credential. Choose Administration | Plugins, then click on the plugin name in the left column. This action takes you to the actual project that contains the plugin. Choose Credentials and edit the default credential. </li>
+			<li><span class="arial">resource_name</span> - The name of the resource to monitor. If Build Class is specified, this is ignored. Otherwise, this is required.</li>
+		</ul>
+
+		<h3 class="help">Creating your own Demand Query procedure</h3>
+		<p class="help">
+		A custom Demand Query procedure is easy to implement. Any procedure can be used, but it must contain one property and two parameters. The parameters are:
+		</p>
+
+		<ul>
+			<li><span class="arial">Pool Name</span> - The name of the Commander resource pool specified in the cloud plan.</li>
+			<li><span class="arial">Current</span> - The number of dynamic resources this cloud plan is currently running.</li>
+		</ul>
+
+		<p class="help">
+		You can use any logic you want in your procedure to figure out how many resources your application needs. You must set the property <span class="code">/myJobs/CloudManager/query</span> to the value you want to pass to Cloud Manager. The value you return should be the total number of resources you want running, not just the delta from what is currently running. Cloud Manager passes in the number of resources it is currently running in the "current" parameter, in case you need it for your calculations.
+		</p>
+
+		<p class="help">
+		Setting a parameter:
+		</p>
+
+		<p class="indented">
+		Shell:
+		</p>
+
+		<p class="codeblock">
+		ectool setProperty /myJob/CloudManager/query 22
+		</p>
+
+		<p class="indented">
+		Perl:
+		</p>
+
+		<p class="codeblock">
+		use ElectricFlow;<br />
+		my $ec = new ElectricFlow();<br />
+		$ec->setProperty("/myJob/CloudManager/query",{value=> 22});<br />
+		</p>
+   </div>
+  </componentContainer>
+</helpDefinition>
+

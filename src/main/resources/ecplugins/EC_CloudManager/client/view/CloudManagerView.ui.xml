@@ -1,0 +1,62 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:ei="urn:import:ecinternal.client.ui">
+
+  <ui:style field="actionList">
+    .filler {
+      width: 100%;
+    }
+    .action {
+      text-align: right;
+      vertical-align: middle;
+      white-space: nowrap;
+      padding-left: 10px;
+    }
+  </ui:style>
+
+  <ui:style src="../styles/Header.css"/>
+    <!--<ui:style field="actionList" src="../styles/ActionList.css"/>-->
+  <ui:with field='internal' type='ecinternal.client.ui.InternalResources'/>
+
+  <g:HTMLPanel>
+    <g:FlowPanel ui:field="m_breadcrumbsPanel"/>
+    <table class="{style.pageHeader} {style.header_table}">
+      <tr>
+        <td>
+          <g:HorizontalPanel styleName="{style.header_left}">
+            <g:cell verticalAlignment="middle">
+              <g:Label ui:field="m_title"
+                       styleName="{style.header_title}"/>
+            </g:cell>
+            <g:cell verticalAlignment="middle">
+              <g:Label ui:field="m_separator"
+                       styleName="{style.header_titleSeparator}">&#8211;</g:Label>
+            </g:cell>
+            <g:cell verticalAlignment="middle">
+              <g:Label ui:field="m_subtitle"
+                       styleName="{style.header_title2}"/>
+            </g:cell>
+          </g:HorizontalPanel>
+        </td>
+        <td class="{actionList.filler}">
+          <g:Label styleName="{actionList.filler}">&#160;</g:Label>
+        </td>
+        <td class="{actionList.action}">
+          <g:FlowPanel ui:field="m_actionsList"
+                       styleName="{actionList.action}"/>
+        </td>
+        <td class="{actionList.action}">
+          <ei:ShortcutStar styleName="{actionList.action}"
+                           ui:field="m_shortcuts"/>
+        </td>
+        <td class="{actionList.action}">
+          <g:HorizontalPanel styleName="{actionList.action}"
+                             ui:field="m_iteratorPanel"/>
+        </td>
+      </tr>
+    </table>
+    <g:DecoratorPanel ui:field="m_mainContentPanel" width="100%"/>
+    <g:VerticalPanel ui:field="m_logPanel" width="100%"/>
+  </g:HTMLPanel>
+</ui:UiBinder>

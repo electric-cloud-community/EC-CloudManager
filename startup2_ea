@@ -1,0 +1,59 @@
+#!/bin/sh
+
+#
+# Script to setup electric cloud infrastructure
+#
+
+case "$1" in
+    'stop')
+        # nothing to do
+	exit 0
+        ;;
+esac
+                
+echo "+ Configuring Agent System"
+
+CONFIG=/etc/sysconfig/ecagent.conf
+
+
+# Let's see if we were given user data from the start instance. If we
+# were, then override the default and point the agent to the specified
+# CM
+
+# If wget error code is 0, there was no error. Use wget instead of
+# curl since curl would stuff 404 HTML crud into file
+wget http://169.254.169.254/1.0/user-data -O /tmp/user-data
+if [ $? -ne 0 ];then
+        echo "could not get user-data from Amazon"
+        exit 1
+fi
+
+
+f1=/tmp/user-data
+f2=$CONFIG
+o1=/tmp/ecagentcfg
+
+## merge the config data
+cp $f1 $o1
+echo "" >> $o1
+
+# get public dns name
+pubhost=`curl http://169.254.169.254/latest/meta-data/public-hostname`
+echo MYHOST=$pubhost >> $o1
+
+#merge the rest
+for line in `cat $f2`;do
+    key=`echo $line | sed -e 's/\=.*/\=/'`
+    out=`grep "^$key" $o1`
+    if [ -z "$out" ] ; then
+        echo  $line >> $o1
+    fi
+done
+
+cp ${CONFIG} ${CONFIG}.orig
+cat $o1 > ${CONFIG}
+
+echo "127.0.0.1             localhost" > /etc/hosts
+/etc/init.d/ecagent restart
+
+

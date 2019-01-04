@@ -1,0 +1,256 @@
+/* Form.css -
+ *
+ * This file contains styles used when displaying forms.
+ *
+ * Copyright (c) 2006-2007 Electric Cloud, Inc.
+ * All rights reserved
+ */
+/* Show a horizontal separator underneath the page title for forms. */
+
+h1.form_header {
+    padding: 0px 0px 10px 0px;
+    border-bottom: 5px solid #CCCCCC;
+}
+/*  Supposedly the width 100% will cause scrolling and clipping in ie6.
+ *  However having it any less than 100% makes horizontal rules not line up.
+ *  If we see the clipping and scrolling, we can fix them another way.
+ */
+
+table.form {
+    padding: 0px;
+    margin: 5px 0px 0px 5px;
+    width: 100%;
+    border-collapse: separate;
+}
+
+.licenseTextArea {
+    width: 800px !important;
+}
+
+table.form td,
+table.form td span {
+    /* IE clears the white-space setting on
+                                        spans if you don't explicitly tell it
+                                        not to 2007-09-19 */
+
+    white-space: nowrap;
+}
+
+.form_row {
+    display: table-row;
+    width: 100%;
+}
+
+.form_row_hidden {
+    display: none;
+}
+/* Labels along the left side of the form: */
+
+td.form_label {
+    width: 150px;
+    vertical-align: top;
+    padding: 2px 10px 0px 0px;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.form_labelText {
+    float: right;
+}
+
+td.form_label .gwt-Label {
+    float: right;
+    padding: 0px 10px 0px 0px;
+}
+
+.form_labelText2 {
+    padding-left: 10px;
+}
+/* Spacing between rows in the form.  Note: we put all of the margin
+ * above the row, rather than divided evenly above and below, so that
+ * a diagnostic message displayed in the next row will be as close as
+ * possible.*/
+
+table.form input,
+.form_labelText,
+table.form textarea,
+table.form select {
+    margin: 8px 0px 0px 0px;
+}
+
+table.form input,
+table.form textarea {
+    padding: 2px;
+}
+/* Different kinds of text input elements. */
+/* Note: the "98%" value below (and throughout this stylesheet) is needed
+ * for Internet Explorer 6.0 SP2 as of 7/2006: if 100% is used (the
+ * desired value), IE ends up clipping the right edges of some elements,
+ * and also forces unnecessary line wrapping.
+ */
+
+table.form input.wideInput,
+table.form td.wideInput {
+    width: 98%;
+}
+
+table.form input.mediumInput {
+    width: 250px;
+    height: 25px;
+    padding: 0px 5px;
+    font-size: 13px;
+}
+
+table.form input.narrowInput {
+    width: 100px;
+}
+
+table.form textarea {
+    vertical-align: middle;
+    width: 98%;
+    padding: 10px;
+    font-size: 13px;
+}
+
+table.form textarea.mediumInput {
+    vertical-align: middle;
+    width: 200px;
+}
+
+.form_staticLabelText {
+    float: left;
+    padding: 10px 0px 0px 0px;
+}
+
+.form_staticLabelText2 {
+    padding-top: 5px;
+}
+/* The following class is used for labels that separate major sections
+ * of Forms.
+ */
+
+table.form td.form_header {
+    font-size: 110%;
+    font-weight: bold;
+    color: #000;
+    padding-left: 5px;
+    padding-right: 10px;
+    width: 148px;
+}
+
+table.form td.form_subheader {
+    color: #666666;
+    font-size: 110%;
+    font-weight: normal;
+    white-space: normal;
+}
+
+.form_headerRule {
+    border-top: 3px solid #FFFFFF;
+    border-right: 0px;
+    border-bottom: 8px solid #FFFFFF;
+    border-left: 0px;
+    background-image: url(../images/dottedBorder2.gif);
+    background-position: bottom;
+    background-repeat: repeat-x;
+    color: #FFFFFF;
+}
+/* The action buttons such as "OK" and "Cancel" at the bottom of the form
+ * are created inside a <div> with the following class:
+ */
+
+.form_buttonHolder {
+    margin: 20px 0px 0px 0px;
+    padding: 10px 0px 10px 0px;
+    border-top: 1px solid #CCCCCC;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.form_buttonHolder input {
+    color: #ffffff;
+    padding: 3px 15px 3px 15px;
+    margin: 0px 0px 0px 10px;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    min-width: 100px;
+    background: #b2b2b2;
+}
+
+.form_buttonHolder input:hover {
+    background-color: #959595;
+}
+
+.form_buttonHolder input:focus {
+    color: #000000;
+    border: 1px solid #999999;
+}
+
+.form_buttonHolder input:focus {
+    outline: none;
+}
+/* The following class is used for error diagnostics displayed inline in
+ * the form.
+ */
+
+table.form_diagnostic {
+    color: #cc0000;
+    font-size: 100%;
+}
+
+table.form_diagnostic img.icon {
+    vertical-align: top;
+    padding-right: 3px;
+    margin-top: 1px;
+}
+/* Electric Cloud copyright message */
+
+.form_copyright {
+    padding: 5px 0px 0px 0px;
+    color: #a7a9ac;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 40px;
+    font-weight: 200;
+}
+/* Help icon styles */
+
+.form_help {
+    width: 100%;
+    color: #696969;
+}
+
+.form_help .gwt-Label {
+    float: none;
+}
+
+.form_help_hidden {
+    display: none;
+}
+
+.form_help_icon {
+    position: relative;
+    min-width: 500px;
+    outline-style: none;
+}
+
+.form_help_icon img {
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+}
+
+tr.form_help td {
+    white-space: normal;
+}
+
+.form_help_column img.icon {
+    cursor: pointer;
+}
+
+.helpCursor {
+    cursor: help;
+    border-bottom-color: #D8D8D8;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+}

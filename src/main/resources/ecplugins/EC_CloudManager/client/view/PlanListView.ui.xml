@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+             ui:generateLocales="default"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+
+  <g:VerticalPanel width="100%">
+    <g:cell horizontalAlignment="ALIGN_RIGHT" height="23px">
+      <g:FlowPanel>
+        <g:Anchor ui:field="m_configure">
+          <ui:msg description="configure">Configure Schedule...</ui:msg>
+        </g:Anchor>
+        <g:InlineLabel>&#160;&#160;|&#160;&#160;</g:InlineLabel>
+        <g:Anchor ui:field="m_refreshLink">
+          <ui:msg description="refresh">Refresh</ui:msg>
+        </g:Anchor>
+        <g:InlineLabel>&#160;&#160;|&#160;&#160;</g:InlineLabel>
+        <g:InlineHyperlink ui:field="m_addLink">
+          <ui:msg description="add">Add...</ui:msg>
+        </g:InlineHyperlink>
+      </g:FlowPanel>
+    </g:cell>
+    <c:CellTable pageSize='10' ui:field="m_table"/>
+    <g:cell horizontalAlignment="ALIGN_RIGHT">
+      <c:SimplePager ui:field="m_pager"/>
+    </g:cell>
+  </g:VerticalPanel>
+</ui:UiBinder>
