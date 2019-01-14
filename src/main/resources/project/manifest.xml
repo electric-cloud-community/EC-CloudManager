@@ -1,0 +1,35 @@
+<?xml version='1.0' standalone='yes'?>
+<fileset>
+  <file>
+    <path>include.perlObjects.pm</path>
+    <xpath>//property[propertyName=&quot;perlObjects.pm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>DummyQueryData.pl</path>
+    <xpath>//property[propertyName=&quot;DummyQueryData.pl&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>ec_setup.pl</path>
+    <xpath>//property[propertyName=&quot;ec_setup&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>step.AcceleratorQuery.pl</path>
+    <xpath>//procedure[procedureName=&quot;AcceleratorQuery&quot;]/step[stepName=&quot;AcceleratorQuery&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>step.AcceleratorQueryCleanup.pl</path>
+    <xpath>//procedure[procedureName=&quot;AcceleratorQueryCleanup&quot;]/step[stepName=&quot;AcceleratorQueryCleanup&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>step.CommanderQuery.pl</path>
+    <xpath>//procedure[procedureName=&quot;CommanderQuery&quot;]/step[stepName=&quot;query&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>step.DummyQuery.pl</path>
+    <xpath>//procedure[procedureName=&quot;DummyQuery&quot;]/step[stepName=&quot;DummyQuery&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>step.RunResourcePlans.pl</path>
+    <xpath>//procedure[procedureName=&quot;RunResourcePlans&quot;]/step[stepName=&quot;ProcessPlans&quot;]/command</xpath>
+  </file>
+</fileset>
